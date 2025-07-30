@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>BetIntel AI</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: Arial, sans-serif; background: #0f172a; color: white; }
+        .login-container { max-width: 400px; margin: 100px auto; padding: 20px; 
+            background: #1e293b; border-radius: 10px; }
+        input { width: 100%; padding: 12px; margin: 10px 0; border-radius: 5px; border: 1px solid #475569; }
+        button { width: 100%; padding: 12px; background: #6366f1; color: white; border: none; border-radius: 5px; cursor: pointer; }
+        .error { color: #ef4444; display: none; }
+        .dashboard { display: none; text-align: center; padding: 20px; }
+        .game-feed { margin: 20px 0; }
+        .game-item { padding: 10px; border-bottom: 1px solid #334155; }
+    </style>
+</head>
+<body>
+    <!-- Login Screen -->
+    <div id="loginScreen" class="login-container">
+        <h2>BetIntel AI</h2>
+        <p>Even our failure outperforms their success.</p>
+        <form id="loginForm">
+            <input type="email" id="email" placeholder="lpmavuso24@gmail.com" required>
+            <input type="password" id="password" placeholder="BetIntel2025!" required>
+            <div id="error" class="error">Invalid credentials</div>
+            <button type="submit">Login</button>
+        </form>
+    </div>
+
+    <!-- Dashboard -->
+    <div id="dashboard" class="dashboard">
+        <h1>BetIntel AI Dashboard</h1>
+        <button onclick="logout()" style="background: #ef4444; width: auto; margin: 20px;">Logout</button>
+        <div class="game-feed" id="gameFeed"></div>
+    </div>
+
+    <script>
+        const ADMIN_EMAIL = 'lpmavuso24@gmail.com';
+        const ADMIN_PASSWORD = 'BetIntel2025!';
+        
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            
+            if (email === ADMIN_EMAIL && password === ADMIN_PASSWORD) {
+                document.getElementById('loginScreen').style.display = 'none';
+                document.getElementById('dashboard').style.display = 'block';
+                loadDashboard();
+            } else {
+                document.getElementById('error').style.display = 'block';
+            }
+        });
+        
+        function logout() {
+            document.getElementById('loginScreen').style.display = 'block';
+            document.getElementById('dashboard').style.display = 'none';
+            document.getElementById('email').value = '';
+            document.getElementById('password').value = '';
+            document.getElementById('error').style.display = 'none';
+        }
+        
+        function loadDashboard() {
+            const feed = document.getElementById('gameFeed');
+            feed.innerHTML = '<h3>Live Game Feed</h3>';
+            for (let i = 0; i < 10; i++) {
+                const time = new Date(Date.now() - i * 5000).toLocaleTimeString();
+                const multiplier = (Math.random() * 10 + 1).toFixed(2);
+                feed.innerHTML += `<div class="game-item">${time} - ${multiplier}x</div>`;
+            }
+        }
+    </script>
+</body>
+</html>
